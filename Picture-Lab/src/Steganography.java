@@ -3,10 +3,10 @@ import java.awt.Color;
 public class Steganography {
 
     public static void main(String[] args) {
-        Picture beach = new Picture("beach.jpg");
-        beach.explore();
-        Picture copy = testClearLow(beach);
-        copy.explore();
+        Picture beach2 = new Picture("beach.jpg");
+        beach2.explore();
+        Picture copy2 = testSetLow(beach2, Color.PINK);
+        copy2.explore();
     }
 
     /**
@@ -20,10 +20,22 @@ public class Steganography {
     }
 
     /**
-     * Set the lower 2 bits in a pixel to the highest 2 bitsin c
+     * Set the lower 2 bits in a pixel to the highest 2 bits in c
      */
     public static void setLow(Pixel p, Color c) {
-        /* To be implemented */
+        p.setRed((p.getRed() / 4 * 4) + (c.getRed() / 64));
+        p.setGreen((p.getGreen() / 4 * 4) + (c.getGreen() / 64));
+        p.setBlue((p.getBlue() / 4 * 4) + (c.getBlue() / 64));
+    }
+
+    public static Picture testSetLow(Picture p, Color c) {
+        Pixel[][] pixels = p.getPixels2D();
+        for (Pixel[] row : pixels) {
+            for (Pixel column : row) {
+                setLow(column, c);
+            }
+        }
+        return p;
     }
 
     public static Picture testClearLow(Picture p) {
