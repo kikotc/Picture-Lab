@@ -9,7 +9,6 @@ public class Steganography {
         copy2.explore();
         Picture copy3 = revealPicture(copy2);
         copy3.explore();
-
     }
 
     /**
@@ -23,7 +22,9 @@ public class Steganography {
         for (int r = 0; r < pixels.length; r++) {
             for (int c = 0; c < pixels[0].length; c++) {
                 Color col = source[r][c].getColor();
-                pixels[r][c].setRed((pixels[r][c].getRed() - (pixels[r][c].getRed() / 64)) + ((col.getRed() % 4) * 64));
+                pixels[r][c].setRed((pixels[r][c].getRed() % 64) + ((col.getRed() % 4) * 64));
+                pixels[r][c].setBlue((pixels[r][c].getBlue() % 64) + ((col.getBlue() % 4) * 64));
+                pixels[r][c].setGreen((pixels[r][c].getGreen() % 64) + ((col.getGreen() % 4) * 64));
             }
         }
         return copy;
